@@ -1,0 +1,81 @@
+﻿@page "/templates"
+
+@using BlazorApp2.Data
+@using BlazorApp2.Models
+@using AntDesign
+
+
+@inject IGuideLineApi guideLineApi
+
+<h3>Guideline</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>AuthorID</th>
+            <th>ClientID</th>
+            <th>ClientName</th>
+            <th>Status</th>
+            <th>CalculationType</th>
+            <th>AllowAttachment</th>
+            <th>FeedbackType</th>
+            <th>TemplateType</th>
+            <th>CreatedAt</th>
+            <th>UpdatedAt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var template in Templates) 
+        {
+        <tr>
+            <td>@template.Id</td>
+            <td>@template.Name</td>
+            <td>@template.Description</td>
+            <td>@template.AuthorID</td>
+            <td>@template.ClientID</td>
+            <td>@template.ClientName</td>
+            <td>@template.Status</td>
+            <td>@template.CalculationType</td>
+            <td>@template.AllowAttachment</td>
+            <td>@template.FeedbackType</td>
+            <td>@template.TemplateType</td>
+            <td>@template.CreatedAt</td>
+            <td>@template.UpdatedAt</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <Button Type="ButtonType.Primary">Primary</Button>
+    <Button>Default</Button>
+    <Button Type="ButtonType.Dashed">Dashed</Button>
+    <Button Type="ButtonType.Text">Text</Button>
+    <Button Type="ButtonType.Link">Link</Button>
+</div>
+
+
+@code {
+
+    List<GuideLineTemplate> Templates = new List<GuideLineTemplate>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            Templates = await guideLineApi.GetTemplatesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+            Console.WriteLine(ex.Message);
+        }
+
+    }
+
+
+}
